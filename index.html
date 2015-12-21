@@ -150,6 +150,9 @@
 
 sliderName.<span class="func">fSlider</span>(<span class="quot">'destroy'</span>); or <span class="jQuery">$</span>(<span class="quot">'.multi4Slider'</span>).<span class="func">fSlider</span>(<span class="quot">'destroy'</span>);
 
+<span class="comment">// return sliding movement direction: 'prev' or 'next'</span>
+sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'</span>); or <span class="jQuery">$</span>(<span class="quot">'.multi4Slider'</span>).<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'</span>);
+
 				</pre>
 
 				<p class="remarks">Please set max-width for .fSlider<br/>
@@ -164,6 +167,26 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'destroy'</span>
 					<img class="sliderItem" src="http://dummyimage.com/285x205/005555/fff" />
 					<img class="sliderItem" src="http://dummyimage.com/285x335/555500/fff" />
 				</div> -->
+
+				<h4>2 sliders working tgt!</h4>
+
+				<div class="slider1">
+					<img class="sliderItem" src="http://dummyimage.com/285x285/550000/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/005500/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/000055/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/005555/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555500/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555555/fff" />
+				</div>
+
+				<div class="slider2">
+					<img class="sliderItem" src="http://dummyimage.com/285x285/550000/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/005500/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/000055/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/005555/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555500/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555555/fff" />
+				</div>
 
 				<h4>center mode</h4>
 
@@ -281,14 +304,65 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'destroy'</span>
 
 		</div>
 
-		
 		<script type="text/javascript">
 			$(document).ready(init_fn);
 			
 			function init_fn(pEvent)
 			{
+				var _slider1Touched = false;
+				var _slider2Touched = false;
+
 				common_fn();
 				$(window).on('load',function(){
+					slider1 = $('.slider1').fSlider({
+						numOfNextSlides: 1,
+						slidesToShow: 1,
+						showArrows: false,
+						responsive: false,
+						callbacks: {afterchangeSlide: function(){
+							if ( _slider1Touched ) {
+								if ( slider1.fSlider('returnSlideDir') === 'next' ) {
+									$('.slider2').find('.fArrow-next').click();
+								} else {
+									$('.slider2').find('.fArrow-prev').click();
+								}
+							}
+						}}
+					});
+					slider2 = $('.slider2').fSlider({
+						numOfNextSlides: 1,
+						slidesToShow: 3,
+						responsive: false,
+						loop: true,
+						callbacks: {afterchangeSlide: function(){
+							if ( _slider2Touched ) {
+								if ( slider2.fSlider('returnSlideDir') === 'next' ) {
+									$('.slider1').find('.fArrow-next').click();
+								} else {
+									$('.slider1').find('.fArrow-prev').click();
+								}
+							}
+						}}
+					});
+
+					_slider1tempCur = $('.slider1').find('.sliderItem.current').index();
+					_slider2tempCur = $('.slider2').find('.sliderItem.current').index();
+					console.log('enter 1: ',_slider1tempCur);
+					console.log('enter 2: ',_slider2tempCur);
+
+					$('.slider1').on('mousedown touchstart', function () {
+						_slider1Touched = true;
+						_slider2Touched = false;
+						console.log('slider 1 touched? ', _slider1Touched);
+						console.log('slider 2 touched? ', _slider2Touched);
+					});
+					$('.slider2').on('mousedown touchstart', function () {
+						_slider2Touched = true;
+						_slider1Touched = false;
+						console.log('slider 1 touched? ', _slider1Touched);
+						console.log('slider 2 touched? ', _slider2Touched);
+					});
+
 					cSlider = $('.centerSlider').fSlider({
 						numOfNextSlides: 1,
 						slidesToShow: 1,
