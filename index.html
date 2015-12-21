@@ -304,6 +304,9 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 
 		</div>
 
+		
+		<script type="text/javascript" src="../js/jquery-migrate-1.2.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.easing.1.3.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(init_fn);
 			
@@ -320,7 +323,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 						showArrows: false,
 						responsive: false,
 						callbacks: {afterchangeSlide: function(){
-							if ( _slider1Touched ) {
+							if ( _slider1Touched && _slider2Touched === false ) {
 								if ( slider1.fSlider('returnSlideDir') === 'next' ) {
 									$('.slider2').find('.fArrow-next').click();
 								} else {
@@ -335,7 +338,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 						responsive: false,
 						loop: true,
 						callbacks: {afterchangeSlide: function(){
-							if ( _slider2Touched ) {
+							if ( _slider2Touched && _slider1Touched === false ) {
 								if ( slider2.fSlider('returnSlideDir') === 'next' ) {
 									$('.slider1').find('.fArrow-next').click();
 								} else {
@@ -344,23 +347,13 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 							}
 						}}
 					});
-
-					_slider1tempCur = $('.slider1').find('.sliderItem.current').index();
-					_slider2tempCur = $('.slider2').find('.sliderItem.current').index();
-					console.log('enter 1: ',_slider1tempCur);
-					console.log('enter 2: ',_slider2tempCur);
-
-					$('.slider1').on('mousedown touchstart', function () {
+					$('.slider1 a[class|="fArrow"], .slider1 .fSliderTrack').on('mousedown touchstart', function() {
 						_slider1Touched = true;
 						_slider2Touched = false;
-						console.log('slider 1 touched? ', _slider1Touched);
-						console.log('slider 2 touched? ', _slider2Touched);
 					});
-					$('.slider2').on('mousedown touchstart', function () {
+					$('.slider2 a[class|="fArrow"], .slider2 .fSliderTrack').on('mousedown touchstart', function() {
 						_slider2Touched = true;
 						_slider1Touched = false;
-						console.log('slider 1 touched? ', _slider1Touched);
-						console.log('slider 2 touched? ', _slider2Touched);
 					});
 
 					cSlider = $('.centerSlider').fSlider({
@@ -412,7 +405,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 					xSlider = $('.thirdSlider').fSlider({
 						defaultCurrentSlide: 2,
 						showArrows: false,
-						autoplay: true
+						autoplay: false
 					});
 
 					$('.destroy').on('click', function(){
