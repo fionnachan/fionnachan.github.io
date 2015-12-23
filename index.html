@@ -132,8 +132,8 @@
 	  <span class="green">afterchangeSlide</span>: <span class="func">function</span>(){}
 	}, <span class="comment">// can pass a function</span>
 	customizeDots: <span class="value">false</span>, <span class="comment">// can use thumbnails</span>	
-	centerMode: <span class="value">false</span>,
-	showSiblingsHowMuch: <span class="value">0.5</span>, <span class="comment">// 0.5 = show 50% width of the sibling slide, if value > 1, > 1 slides will be on each side of the center slide(s)</span>
+	centerMode: <span class="value">false</span>, <span class="comment">// slidersToShow should always be 1 if centerMode is set true</span>
+	showSiblingsHowMuch: <span class="value">0.5</span>, <span class="comment">// 0.5 = show 50% width of the sibling slide, if value > 1, > 1 slides will be on each side of the center slide</span>
 	dots: <span class="value">true</span>,
 	drag: <span class="value">true</span>,
 	dynamicHeight: <span class="value">false</span>, <span class="comment">// if this is set false, default slider item vertical-align: middle</span>
@@ -161,15 +161,17 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 				<p class="remarks">Please set max-width for .fSlider<br/>
 					Please wrap your slider init in $(window).on('load')</p>
 
-				<!-- <h4>Show 1 slide; vertical * working copy</h4>
+				<h4>Show 1 slide; center mode; showSiblingsHowMuch: 2.5</h4>
 
-				<div class="multi4Slider">
-					<img class="sliderItem" src="http://dummyimage.com/285x305/550000/fff" />
+				<div class="siblingsSlider">
+					<img class="sliderItem" src="http://dummyimage.com/285x285/550000/fff" />
 					<img class="sliderItem" src="http://dummyimage.com/285x285/005500/fff" />
-					<img class="sliderItem" src="http://dummyimage.com/285x405/000055/fff" />
-					<img class="sliderItem" src="http://dummyimage.com/285x205/005555/fff" />
-					<img class="sliderItem" src="http://dummyimage.com/285x335/555500/fff" />
-				</div> -->
+					<img class="sliderItem" src="http://dummyimage.com/285x285/000055/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/005555/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555500/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/555555/fff" />
+					<img class="sliderItem" src="http://dummyimage.com/285x285/550055/fff" />
+				</div>
 
 				<h4>2 sliders working tgt!</h4>
 
@@ -320,6 +322,14 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 
 				common_fn();
 				$(window).on('load',function(){
+					siblingsSlider = $('.siblingsSlider').fSlider({
+						numOfNextSlides: 1,
+						slidesToShow: 1,
+						responsive: false,
+						loop: true,
+						centerMode: true,
+						showSiblingsHowMuch: 2.5
+					});
 					slider1 = $('.slider1').fSlider({
 						numOfNextSlides: 1,
 						slidesToShow: 1,
