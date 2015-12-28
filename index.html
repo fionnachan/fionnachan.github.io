@@ -102,14 +102,6 @@
 			.centerSlider {
 				max-width: 285px;
 			}
-			.centerSlider .sliderItem {
-				box-sizing: border-box;
-				padding: 40px;
-				transition: all 0.2s ease-in-out;
-			}
-			.centerSlider .sliderItem.current {
-				padding: 0;
-			}
 		</style>
 		
 	</head>
@@ -133,6 +125,7 @@
 	}, <span class="comment">// can pass a function</span>
 	customizeDots: <span class="value">false</span>, <span class="comment">// can use thumbnails</span>	
 	centerMode: <span class="value">false</span>, <span class="comment">// slidesToShow should always be 1 if centerMode is set true</span>
+	centerPadding: <span class="value">20</span>, <span class="comment">// center mode padding applied to current slide in px</span>
 	showSiblingsHowMuch: <span class="value">0.5</span>, <span class="comment">// 0.5 = show 50% width of the sibling slide, if value > 1, > 1 slides will be on each side of the center slide</span>
 	dots: <span class="value">true</span>,
 	drag: <span class="value">true</span>,
@@ -387,6 +380,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 						numOfNextSlides: [1, 3],
 						slidesToShow: [1, 3],
 						centerMode: true,
+						centerPadding: 0,
 						responsiveBreakPoint: mResponsive_array,
 						callbacks: {afterchangeSlide: function(){
 							console.log('this is a callback!');
@@ -418,7 +412,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 					xSlider = $('.thirdSlider').fSlider({
 						defaultCurrentSlide: 2,
 						showArrows: false,
-						autoplay: false
+						autoplay: true
 					});
 
 					$('.destroy').on('click', function(){
@@ -429,6 +423,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 							numOfNextSlides: [1, 3],
 							slidesToShow: [1, 3],
 							centerMode: true,
+							centerPadding: 0,
 							responsiveBreakPoint: mResponsive_array,
 							callbacks: {afterchangeSlide: function(){
 								console.log('this is a callback!');
@@ -441,3 +436,4 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 		</script>
 	</body>
 </html>
+
