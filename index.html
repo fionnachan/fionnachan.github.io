@@ -102,6 +102,16 @@
 			.centerSlider {
 				max-width: 285px;
 			}
+			.gigaSlider {
+				max-width: 1425px; 
+			}
+			.gigaSlider .sliderItem {
+				width: 285px;
+			}
+			.gigaSlider img {
+				width: 100%;
+				display: block;
+			}
 		</style>
 		
 	</head>
@@ -119,8 +129,10 @@
 	arrowNextClass: <span class="quot">'fArrow-next'</span>, <span class="comment">// provided for easy styling of arrows</span>
 	autoplay: <span class="value">false</span>,	
 	autoplaySpeed: <span class="value">3000</span>, <span class="comment">// in ms</span>
+	adaptiveHeightOnResize: <span class="value">false</span>,
 	loop: <span class="value">false</span>,
 	callbacks: {
+	  <span class="green">noLoopAfterEndSlideClickArrow</span>: <span class="func">function</span>(){},
 	  <span class="green">afterchangeSlide</span>: <span class="func">function</span>(){}
 	}, <span class="comment">// can pass a function</span>
 	customizeDots: <span class="value">false</span>, <span class="comment">// can use thumbnails</span>	
@@ -154,6 +166,58 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 				<p class="remarks">Please set max-width for .fSlider<br/>
 					Please set max-width of .fSlider as current slide width for center mode<br/>
 					Please wrap your slider init in $(window).on('load')</p>
+
+				<h4>Autoplay; speed: 0</h4>
+
+				<div class="gigaSlider">
+					<div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/550000/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/550000/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/550000/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/550000/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/550000/fff" />
+					</div><!-- 
+
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/005500/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/005500/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/005500/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/005500/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/005500/fff" />
+					</div><!-- 
+
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/000055/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/000055/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/000055/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/000055/fff" />
+					</div><!-- 
+					 --><div class="sliderItem">
+						<img src="http://dummyimage.com/285x285/000055/fff" />
+					</div><!-- 
+				 --></div>
 
 				<h4>Show 1 slide; center mode; showSiblingsHowMuch: 2.5</h4>
 
@@ -316,6 +380,52 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 
 				common_fn();
 				$(window).on('load',function(){
+					gigaSlider = $('.gigaSlider').fSlider({
+						numOfNextSlides: 5,
+						slidesToShow: 5,
+						responsive: false,
+						loop: true,
+						speed: 0,
+						drag: false,
+						autoplay: true	
+					});
+
+					$(window).on('responsive',function(){						
+						$('.gigaSlider').fSlider('destroy');
+						gigaSlider = null;
+						setTimeout(function(){
+							$('.gigaSlider').attr('style','');
+							setTimeout(function(){
+								if ( $('body').hasClass('mobile') ) {
+									gigaSlider = $('.gigaSlider').fSlider({
+										numOfNextSlides: 1,
+										slidesToShow: 1,
+										responsive: false,
+										loop: true,
+										speed: 0,
+										centerMode: true,
+										showSiblingsHowMuch: 0.25,
+										centerPadding: 0
+									});
+								} else {
+									gigaSlider = $('.gigaSlider').fSlider({
+										numOfNextSlides: 5,
+										slidesToShow: 5,
+										responsive: false,
+										loop: true,
+										speed: 0,
+										centerMode: false,
+										centerPadding: 0,
+										drag: false,
+										autoplay: true			
+									});									
+								}
+							},50);
+											
+						},200);
+						
+					});
+
 					siblingsSlider = $('.siblingsSlider').fSlider({
 						numOfNextSlides: 1,
 						slidesToShow: 1,
@@ -329,30 +439,36 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 						slidesToShow: 1,
 						showArrows: false,
 						responsive: false,
-						callbacks: {afterchangeSlide: function(){
-							if ( _slider1Touched && _slider2Touched === false ) {
-								if ( slider1.fSlider('returnSlideDir') === 'next' ) {
-									$('.slider2').find('.fArrow-next').click();
-								} else {
-									$('.slider2').find('.fArrow-prev').click();
+						callbacks: {
+							noLoopAfterEndSlideClickArrow: function(){},
+							afterchangeSlide: function(){
+								if ( _slider1Touched && _slider2Touched === false ) {
+									if ( slider1.fSlider('returnSlideDir') === 'next' ) {
+										$('.slider2').find('.fArrow-next').click();
+									} else {
+										$('.slider2').find('.fArrow-prev').click();
+									}
 								}
 							}
-						}}
+						}
 					});
 					slider2 = $('.slider2').fSlider({
 						numOfNextSlides: 1,
 						slidesToShow: 3,
 						responsive: false,
 						loop: true,
-						callbacks: {afterchangeSlide: function(){
-							if ( _slider2Touched && _slider1Touched === false ) {
-								if ( slider2.fSlider('returnSlideDir') === 'next' ) {
-									$('.slider1').find('.fArrow-next').click();
-								} else {
-									$('.slider1').find('.fArrow-prev').click();
+						callbacks: {
+							noLoopAfterEndSlideClickArrow: function(){},
+							afterchangeSlide: function(){
+								if ( _slider2Touched && _slider1Touched === false ) {
+									if ( slider2.fSlider('returnSlideDir') === 'next' ) {
+										$('.slider1').find('.fArrow-next').click();
+									} else {
+										$('.slider1').find('.fArrow-prev').click();
+									}
 								}
 							}
-						}}
+						}
 					});
 					$('.slider1 a[class|="fArrow"], .slider1 .fSliderTrack').on('mousedown touchstart', function() {
 						_slider1Touched = true;
@@ -383,7 +499,9 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 						centerMode: true,
 						centerPadding: 0,
 						responsiveBreakPoint: mResponsive_array,
-						callbacks: {afterchangeSlide: function(){
+						callbacks: {
+							noLoopAfterEndSlideClickArrow: function(){},
+							afterchangeSlide: function(){
 							console.log('this is a callback!');
 						}}
 					});
@@ -426,7 +544,9 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 							centerMode: true,
 							centerPadding: 0,
 							responsiveBreakPoint: mResponsive_array,
-							callbacks: {afterchangeSlide: function(){
+							callbacks: {
+								noLoopAfterEndSlideClickArrow: function(){},
+								afterchangeSlide: function(){
 								console.log('this is a callback!');
 							}}
 						});
@@ -437,3 +557,4 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 		</script>
 	</body>
 </html>
+
