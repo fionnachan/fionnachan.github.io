@@ -132,6 +132,7 @@
 	adaptiveHeightOnResize: <span class="value">false</span>,
 	loop: <span class="value">false</span>,
 	callbacks: {
+	  <span class="green">beforeGoToSlide</span>: <span class="func">function</span>(){},
 	  <span class="green">noLoopAfterEndSlideClickArrow</span>: <span class="func">function</span>(){},
 	  <span class="green">afterchangeSlide</span>: <span class="func">function</span>(){}
 	}, <span class="comment">// can pass a function</span>
@@ -168,8 +169,7 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 				</pre>
 
 				<p class="remarks">Please set max-width for .fSlider<br/>
-					Please set max-width of .fSlider as current slide width for center mode<br/>
-					Please wrap your slider init in $(window).on('load')</p>
+					Please set max-width of .fSlider as current slide width for center mode</p>
 
 				<h4>Autoplay; speed: 0</h4>
 
@@ -383,121 +383,166 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 				var _slider2Touched = false;
 
 				common_fn();
-				$(window).on('load',function(){
-					gigaSlider = $('.gigaSlider').fSlider({
-						numOfNextSlides: 5,
-						slidesToShow: 5,
-						responsive: false,
-						loop: true,
-						speed: 0,
-						drag: false,
-						autoplay: true	
-					});
 
-					$(window).on('responsive',function(){						
-						$('.gigaSlider').fSlider('destroy');
-						gigaSlider = null;
+				gigaSlider = $('.gigaSlider').fSlider({
+					numOfNextSlides: 5,
+					slidesToShow: 5,
+					responsive: false,
+					loop: true,
+					speed: 0,
+					drag: false,
+					autoplay: true	
+				});
+
+				$(window).on('responsive',function(){						
+					$('.gigaSlider').fSlider('destroy');
+					gigaSlider = null;
+					setTimeout(function(){
+						$('.gigaSlider').attr('style','');
 						setTimeout(function(){
-							$('.gigaSlider').attr('style','');
-							setTimeout(function(){
-								if ( $('body').hasClass('mobile') ) {
-									gigaSlider = $('.gigaSlider').fSlider({
-										numOfNextSlides: 1,
-										slidesToShow: 1,
-										responsive: false,
-										loop: true,
-										speed: 0,
-										centerMode: true,
-										showSiblingsHowMuch: 0.25,
-										centerPadding: 0
-									});
+							if ( $('body').hasClass('mobile') ) {
+								gigaSlider = $('.gigaSlider').fSlider({
+									numOfNextSlides: 1,
+									slidesToShow: 1,
+									responsive: false,
+									loop: true,
+									speed: 0,
+									centerMode: true,
+									showSiblingsHowMuch: 0.25,
+									centerPadding: 0
+								});
+							} else {
+								gigaSlider = $('.gigaSlider').fSlider({
+									numOfNextSlides: 5,
+									slidesToShow: 5,
+									responsive: false,
+									loop: true,
+									speed: 0,
+									centerMode: false,
+									centerPadding: 0,
+									drag: false,
+									autoplay: true			
+								});									
+							}
+						},50);
+										
+					},200);
+					
+				});
+
+				siblingsSlider = $('.siblingsSlider').fSlider({
+					numOfNextSlides: 1,
+					slidesToShow: 1,
+					responsive: false,
+					loop: true,
+					centerMode: true,
+					showSiblingsHowMuch: 2.5
+				});
+				slider1 = $('.slider1').fSlider({
+					numOfNextSlides: 1,
+					slidesToShow: 1,
+					showArrows: false,
+					responsive: false,
+					callbacks: {
+						noLoopAfterEndSlideClickArrow: function(){},
+						afterchangeSlide: function(){
+							if ( _slider1Touched && _slider2Touched === false ) {
+								if ( slider1.fSlider('returnSlideDir') === 'next' ) {
+									$('.slider2').find('.fArrow-next').click();
 								} else {
-									gigaSlider = $('.gigaSlider').fSlider({
-										numOfNextSlides: 5,
-										slidesToShow: 5,
-										responsive: false,
-										loop: true,
-										speed: 0,
-										centerMode: false,
-										centerPadding: 0,
-										drag: false,
-										autoplay: true			
-									});									
-								}
-							},50);
-											
-						},200);
-						
-					});
-
-					siblingsSlider = $('.siblingsSlider').fSlider({
-						numOfNextSlides: 1,
-						slidesToShow: 1,
-						responsive: false,
-						loop: true,
-						centerMode: true,
-						showSiblingsHowMuch: 2.5
-					});
-					slider1 = $('.slider1').fSlider({
-						numOfNextSlides: 1,
-						slidesToShow: 1,
-						showArrows: false,
-						responsive: false,
-						callbacks: {
-							noLoopAfterEndSlideClickArrow: function(){},
-							afterchangeSlide: function(){
-								if ( _slider1Touched && _slider2Touched === false ) {
-									if ( slider1.fSlider('returnSlideDir') === 'next' ) {
-										$('.slider2').find('.fArrow-next').click();
-									} else {
-										$('.slider2').find('.fArrow-prev').click();
-									}
+									$('.slider2').find('.fArrow-prev').click();
 								}
 							}
 						}
-					});
-					slider2 = $('.slider2').fSlider({
-						numOfNextSlides: 1,
-						slidesToShow: 3,
-						responsive: false,
-						loop: true,
-						callbacks: {
-							noLoopAfterEndSlideClickArrow: function(){},
-							afterchangeSlide: function(){
-								if ( _slider2Touched && _slider1Touched === false ) {
-									if ( slider2.fSlider('returnSlideDir') === 'next' ) {
-										$('.slider1').find('.fArrow-next').click();
-									} else {
-										$('.slider1').find('.fArrow-prev').click();
-									}
+					}
+				});
+				slider2 = $('.slider2').fSlider({
+					numOfNextSlides: 1,
+					slidesToShow: 3,
+					responsive: false,
+					loop: true,
+					callbacks: {
+						noLoopAfterEndSlideClickArrow: function(){},
+						afterchangeSlide: function(){
+							if ( _slider2Touched && _slider1Touched === false ) {
+								if ( slider2.fSlider('returnSlideDir') === 'next' ) {
+									$('.slider1').find('.fArrow-next').click();
+								} else {
+									$('.slider1').find('.fArrow-prev').click();
 								}
 							}
 						}
-					});
-					$('.slider1 a[class|="fArrow"], .slider1 .fSliderTrack').on('mousedown touchstart', function() {
-						_slider1Touched = true;
-						_slider2Touched = false;
-					});
-					$('.slider2 a[class|="fArrow"], .slider2 .fSliderTrack').on('mousedown touchstart', function() {
-						_slider2Touched = true;
-						_slider1Touched = false;
-					});
+					}
+				});
+				$('.slider1 a[class|="fArrow"], .slider1 .fSliderTrack').on('mousedown touchstart', function() {
+					_slider1Touched = true;
+					_slider2Touched = false;
+				});
+				$('.slider2 a[class|="fArrow"], .slider2 .fSliderTrack').on('mousedown touchstart', function() {
+					_slider2Touched = true;
+					_slider1Touched = false;
+				});
 
-					cSlider = $('.centerSlider').fSlider({
-						numOfNextSlides: 1,
-						slidesToShow: 1,
-						showArrows: false,
-						responsive: false,
-						centerMode: true
-					});
-					bSlider = $('.multi4Slider').fSlider({
-						loop: false,
-						slidesToShow: 1,
-						numOfNextSlides: 1,
-						responsive: false,
-						vertical: true
-					});
-					kSlider = $('.multiSlider').fSlider({
+				cSlider = $('.centerSlider').fSlider({
+					numOfNextSlides: 1,
+					slidesToShow: 1,
+					showArrows: false,
+					responsive: false,
+					centerMode: true
+				});
+				bSlider = $('.multi4Slider').fSlider({
+					loop: false,
+					slidesToShow: 1,
+					numOfNextSlides: 1,
+					responsive: false,
+					vertical: true
+				});
+				kSlider = $('.multiSlider').fSlider({
+					numOfNextSlides: [1, 3],
+					slidesToShow: [1, 3],
+					centerMode: true,
+					centerPadding: 0,
+					responsiveBreakPoint: mResponsive_array,
+					callbacks: {
+						noLoopAfterEndSlideClickArrow: function(){},
+						afterchangeSlide: function(){
+						console.log('this is a callback!');
+					}}
+				});
+				tSlider = $('.threeSlider').fSlider({
+					numOfNextSlides: [1, 3],
+					slidesToShow: [1, 3],
+					dynamicHeight: true,
+					responsiveBreakPoint: mResponsive_array
+				});
+			
+				sSlider = $('.multinoloopSlider').fSlider({
+					loop: false,
+					numOfNextSlides: [1, 1],
+					slidesToShow: [1, 1],
+					customizeDots: true
+				});				
+				pSlider = $('.slider').fSlider();
+				mSlider = $('.fadeSlider').fSlider({
+					fade: true,
+					dynamicHeight: true
+				});
+				aSlider = $('.multi2Slider').fSlider({
+					loop: false,
+					numOfNextSlides: [2, 2],
+					slidesToShow: [2, 2]
+				});				
+				xSlider = $('.thirdSlider').fSlider({
+					defaultCurrentSlide: 2,
+					showArrows: false,
+					autoplay: true
+				});
+
+				$('.destroy').on('click', function(){
+					kSlider.fSlider('destroy');
+				});
+				$('.reinit').on('click', function(){
+					$('.multiSlider').fSlider({
 						numOfNextSlides: [1, 3],
 						slidesToShow: [1, 3],
 						centerMode: true,
@@ -509,53 +554,6 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 							console.log('this is a callback!');
 						}}
 					});
-					tSlider = $('.threeSlider').fSlider({
-						numOfNextSlides: [1, 3],
-						slidesToShow: [1, 3],
-						dynamicHeight: true,
-						responsiveBreakPoint: mResponsive_array
-					});
-				
-					sSlider = $('.multinoloopSlider').fSlider({
-						loop: false,
-						numOfNextSlides: [1, 1],
-						slidesToShow: [1, 1],
-						customizeDots: true
-					});				
-					pSlider = $('.slider').fSlider();
-					mSlider = $('.fadeSlider').fSlider({
-						fade: true,
-						dynamicHeight: true
-					});
-					aSlider = $('.multi2Slider').fSlider({
-						loop: false,
-						numOfNextSlides: [2, 2],
-						slidesToShow: [2, 2]
-					});				
-					xSlider = $('.thirdSlider').fSlider({
-						defaultCurrentSlide: 2,
-						showArrows: false,
-						autoplay: true
-					});
-
-					$('.destroy').on('click', function(){
-						kSlider.fSlider('destroy');
-					});
-					$('.reinit').on('click', function(){
-						$('.multiSlider').fSlider({
-							numOfNextSlides: [1, 3],
-							slidesToShow: [1, 3],
-							centerMode: true,
-							centerPadding: 0,
-							responsiveBreakPoint: mResponsive_array,
-							callbacks: {
-								noLoopAfterEndSlideClickArrow: function(){},
-								afterchangeSlide: function(){
-								console.log('this is a callback!');
-							}}
-						});
-					});
-
 				});
 			}
 		</script>
