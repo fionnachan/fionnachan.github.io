@@ -147,16 +147,13 @@
 	widthHeightRatio: <span class="value">0</span>, <span class="comment">// if setHeight is set true, you must provide this value</span>
 	defaultCurrentSlide: <span class="value">0</span>, <span class="comment">// start from 0</span>
 	easing: <span class="quot">'easeOutExpo'</span>, <span class="comment">// pass any jQuery easing</span>
-	fade: <span class="value">false</span>, <span class="comment">// only display 1 slide</span>	
 	numOfNextSlides: [<span class="value">1</span>, <span class="value">1</span>], <span class="comment">// for responsive, please pass an array, for non-responsive, pass either integer or array </span>
 	pauseOnHover: <span class="value">true</span>,
 	responsiveBreakPoint: [<span class="value">0</span>, <span class="value">960</span>], <span class="comment">// must include 0</span>
 	responsive: <span class="value">true</span>,
 	showArrows: <span class="value">true</span>,
 	slidesToShow: [<span class="value">1</span>, <span class="value">1</span>], <span class="comment">// for responsive, please pass an array, for non-responsive, pass either integer or array </span>
-	speed: <span class="value">500</span>, <span class="comment">// in ms</span>
-	vTop: <span class="value">false</span>, <span class="comment">// for fixed height, if this is not set, default = vertical-align: middle</span>
-	vBottom: <span class="value">false</span>, <span class="comment">// for fixed height, if this is not set, default = vertical-align: middle</span>
+	speed: <span class="value">500</span> <span class="comment">// in ms</span>
 });
 
 sliderName.<span class="func">fSlider</span>(<span class="quot">'destroy'</span>); or <span class="jQuery">$</span>(<span class="quot">'.multi4Slider'</span>).<span class="func">fSlider</span>(<span class="quot">'destroy'</span>);
@@ -443,14 +440,14 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 					slidesToShow: 1,
 					showArrows: false,
 					responsive: false,
+					dots: false,
 					callbacks: {
-						noLoopAfterEndSlideClickArrow: function(){},
 						afterchangeSlide: function(){
 							if ( _slider1Touched && _slider2Touched === false ) {
 								if ( slider1.fSlider('returnSlideDir') === 'next' ) {
-									$('.slider2').find('.fArrow-next').click();
+									$('.slider2').siblings('.fArrow-next').trigger('click');
 								} else {
-									$('.slider2').find('.fArrow-prev').click();
+									$('.slider2').siblings('.fArrow-prev').trigger('click');
 								}
 							}
 						}
@@ -462,23 +459,23 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 					responsive: false,
 					loop: true,
 					callbacks: {
-						noLoopAfterEndSlideClickArrow: function(){},
 						afterchangeSlide: function(){
+							console.log('after change slide sliderr 2');
 							if ( _slider2Touched && _slider1Touched === false ) {
 								if ( slider2.fSlider('returnSlideDir') === 'next' ) {
-									$('.slider1').find('.fArrow-next').click();
+									$('.slider1').siblings('.fArrow-next').trigger('click');
 								} else {
-									$('.slider1').find('.fArrow-prev').click();
+									$('.slider1').siblings('.fArrow-prev').trigger('click');
 								}
 							}
 						}
 					}
 				});
-				$('.slider1 a[class|="fArrow"], .slider1 .fSliderTrack').on('mousedown touchstart', function() {
+				$('.slider1 a[class|="fArrow"], .slider1').on('mousedown touchstart', function() {
 					_slider1Touched = true;
 					_slider2Touched = false;
 				});
-				$('.slider2 a[class|="fArrow"], .slider2 .fSliderTrack').on('mousedown touchstart', function() {
+				$('.slider2 a[class|="fArrow"], .slider2').on('mousedown touchstart', function() {
 					_slider2Touched = true;
 					_slider1Touched = false;
 				});
@@ -504,7 +501,6 @@ sliderName.<span class="func">fSlider</span>(<span class="quot">'returnSlideDir'
 					centerPadding: 0,
 					responsiveBreakPoint: mResponsive_array,
 					callbacks: {
-						noLoopAfterEndSlideClickArrow: function(){},
 						afterchangeSlide: function(){
 						console.log('this is a callback!');
 					}}
