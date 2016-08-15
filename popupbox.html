@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-hk">
+  <head>
+    <!--Meta-->
+    <meta charset="UTF-8">
+    <meta name="author" content="fionnachan" />
+    <meta name="description" />
+    <meta name="keywords" />
+    <meta name="robots" content="all" />
+
+    <!--Mobile Usage-->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width , initial-scale=1.0 , user-scalable=no , minimal-ui" />
+    <script type="text/javascript">
+    	if ( navigator.userAgent.match(/iPad/i) ){
+    		document.write('<meta name="viewport" content="width=1024, minimal-ui , user-scalable=no">');
+    	}
+    </script>
+    <style>
+    @import "https://fonts.googleapis.com/css?family=Montserrat|Open+Sans";
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      margin: 20px;
+      border-bottom: 1px solid #000;
+      transition: border-bottom 0.4s;
+    }
+    a:hover {
+      border-bottom: 1px solid transparent;
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    .header {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      padding: 6vh 20px;
+      text-align: center;
+      box-shadow: 0 1px 6px 0px #333;
+    }
+
+    .footer {
+      font-size: 12px;
+      padding: 5vh 20px;
+      color: #fff;
+      text-align: center;
+      background-color: #000;
+    }
+
+    .contentWrapper {
+      box-sizing: border-box;
+      height: 65vh;
+      padding: 60px 20px;
+    }
+    .contentWrapper .content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    body.popup-show:before {
+      content: '';
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .popupBox {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      display: none;
+      position: absolute;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background-color: #fff;
+      margin: 20px auto;
+      border: 2px solid #000;
+    }
+    .popupBox.show {
+      display: block;
+    }
+    .popupBox.scroll {
+      max-height: 100vh;
+    }
+    .popupBox .popHead {
+      padding: 10px 0px 20px;
+      text-align: center;
+    }
+    .popupBox.scroll .popContent {
+      overflow: auto;
+    }
+    .popupBox.scroll .popContent::-webkit-scrollbar {
+      width: 10px;
+    }
+    .popupBox.scroll .popContent::-webkit-scrollbar-track {
+      background-color: #a1c3e5;
+    }
+    .popupBox.scroll .popContent::-webkit-scrollbar-thumb {
+      background-color: #36f;
+    }
+    .popupBox.scroll .popContent::-webkit-scrollbar-button {
+      height: 0;
+      background-color: #a1c3e5;
+    }
+    .popupBox.scroll .popContent::-webkit-scrollbar-corner {
+      background-color: #000000;
+    }
+    .popupBox .popClose {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      -webkit-transition: transform 0.4s;
+      -moz-transition: transform 0.4s;
+      transition: transform 0.4s;
+      cursor: pointer;
+    }
+    .popupBox .popClose:hover {
+      -webkit-transform: scale(1.2);
+      -moz-transform: scale(1.2);
+      transform: scale(1.2);
+    }
+    .popupBox .popClose:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      top: 50%;
+      left: 0;
+      background-color: #000;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    .popupBox .popClose:after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      top: 50%;
+      left: 0;
+      background-color: #000;
+      -webkit-transform: rotate(135deg);
+      -moz-transform: rotate(135deg);
+      transform: rotate(135deg);
+    }
+    </style>
+  </head>
+  <body>
+    <div class="header">popupBox.js</div>
+    <div class="contentWrapper">
+      <div class="content"><a id="tnc" href="javascript:void(0);">Terms and Conditions</a><a id="pp" href="javascript:void(0);">Privacy Policy</a></div>
+      <div id="popup1" class="popupBox">
+        <div class="popClose"></div>
+        <div class="popHead">
+          <h3>Terms and Conditions</h3>
+        </div>
+        <div class="popContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. </div>
+      </div>
+      <div id="popup2" class="popupBox">
+        <div class="popClose"></div>
+        <div class="popHead">
+          <h3>Privacy Policy</h3>
+        </div>
+        <div class="popContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus mi eget sem tristique, ac fringilla nulla semper. Praesent semper tempus arcu sit amet dapibus. Cras molestie lorem vitae magna mollis, sit amet pulvinar dui ornare. Quisque et nisl interdum, varius risus ut, convallis ipsum. Sed eu ipsum faucibus dui pharetra malesuada. Proin eget dui id urna fermentum gravida. Pellentesque pretium eget lacus vel iaculis. Nulla scelerisque eget purus ut dictum. Morbi interdum imperdiet elementum. Nulla est ligula, imperdiet nec dolor semper, iaculis eleifend urna. Nunc odio eros, mollis non venenatis in, euismod ac arcu. Nulla facilisi. Nam bibendum ultricies dui ac egestas. Aenean malesuada quam erat, quis scelerisque mauris blandit eu. </div>
+      </div>
+    </div>
+    <div class="footer">&copy; 2016 &nbsp; Fionna Chan</div>
+    <script>
+    function $_(_target) {
+      function popupBox(_target) {
+        var _ = this;
+        _.target = _target;
+        _.linkName = "";
+        _.scrollContent = false;
+        _.openDelay = 0;
+        _.closeDelay = 0;
+        _.beforeOpen = function(){};
+        _.afterOpen = function(){};
+        _.beforeClose = function(){};
+        _.afterClose = function(){};
+      }
+
+      popupBox.prototype.$ = function(tar) {
+        return document.querySelector(tar);
+      };
+
+      popupBox.prototype.init = function(_config) {
+        var _ = this;
+
+        for (var prop in _config) {
+          _[prop] = _config[prop];
+        }
+
+        _.$(_.linkName).addEventListener("click", function() {
+          _.$('body').appendChild(_.$(_.target));
+          _.beforeOpen();
+          setTimeout(function() {
+            _.$('body').classList.add("popup-show");
+            _.$(_.target).classList.add("show");
+
+        if (_.scrollContent) {
+          var popupHeight = document.body.clientHeight;
+          var popHeadHeight = _.$(_.target + ' .popHead').offsetHeight;
+          var popMarginTop = _.$(_.target + ' .popHead').offsetTop;
+          _.$(_.target).classList.add('scroll');
+          _.$(_.target + ' .popContent').style.height = document.documentElement.clientHeight - popHeadHeight - popMarginTop*2 + 'px';
+        }
+            _.afterOpen();
+          }, _.openDelay);
+        }, false);
+
+        _.$(_.target + ' .popClose').addEventListener("click", function() {
+          _.beforeClose();
+          setTimeout(function() {
+            _.$('body').classList.remove("popup-show");
+            _.$(_.target).classList.remove("show");
+            _.afterClose();
+          }, _.closeDelay);
+        });
+      };
+      return new popupBox(_target);
+    }
+
+    $_('#popup1').init({
+      'linkName' : '#tnc',
+      'openDelay' : 300,
+      'closeDelay' : 300,
+      'scrollContent' : true,
+      'beforeOpen' : function() {
+        document.querySelector('body').style.backgroundColor = "#a1c3e5";
+      },
+      'afterOpen' : function() {
+        document.querySelector('body').style.backgroundColor = "#0000ff";
+      },
+      'beforeClose' : function() {
+        document.querySelector('body').style.backgroundColor = "#000000";
+      },
+      'afterClose' : function() {
+        document.querySelector('body').style.backgroundColor = "#ffffff";
+      }
+    });
+
+    $_('#popup2').init({
+      'linkName' : '#pp',
+      'openDelay' : 0,
+      'closeDelay' : 0
+    });
+    </script>
+  </body>
+</html>
