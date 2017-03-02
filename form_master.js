@@ -29,7 +29,7 @@ fifi_form = (function() {
     var result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie);
     return result ? result[1] : null;
   }; // readCookie
-  function ajaxPost(link, data, onSuccess) {
+  function ajaxPost(link, data, onSuccess, _) {
     var request = new XMLHttpRequest();
     request.open('POST', link, true);
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -391,17 +391,19 @@ fifi_form = (function() {
           addQ = document.querySelectorAll(_.def.wrapper + ' [class*="add-Question"]');
         }
       }
-      for (var j = 0; j < addQ.length; j++) {
-        comments += '\u3010' + addQ[j].querySelector('.label').textContent + '\u3011';
-        if (addQ[j].querySelectorAll('select').length > 0) {
-          var val = addQ[j].querySelector('select').value == '' ? 'empty answer' : addQ[j].querySelector('select').value;
-          comments += val;
-        } else {
-          for (var k = 1; k < addQ[j].children.length; k++) {
-            if (addQ[j].children[k].querySelector('input').checked) {
-              comments += addQ[j].children[k].querySelector('input').value + ';';
-            }
-          }
+      if (typeof addQ !== "undefined") {
+        for (let j = 0; j < addQ.length; j++) {
+          comments += `【${addQ[j].querySelector('.label').textContent}】`;
+           if (addQ[j].querySelectorAll('select').length > 0) {
+             let val = (addQ[j].querySelector('select').value == '') ? 'empty answer' : addQ[j].querySelector('select').value;
+             comments += val;
+           } else {
+             for (let k = 1; k < addQ[j].children.length; k++) {
+               if (addQ[j].children[k].querySelector('input').checked) {
+                 comments += addQ[j].children[k].querySelector('input').value + ';';
+               }
+             }
+           }
         }
       }
       return comments;
@@ -465,7 +467,7 @@ fifi_form = (function() {
           }
         }
         _.def.customSubmitSuccess();
-      });
+      }, _);
     } else {
       //error
       _.def.customSubmitError();
